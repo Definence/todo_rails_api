@@ -26,12 +26,13 @@ class TasksController < ApplicationController
 
   # PATCH/PUT /tasks/1
   def update
-    @task = Task.find params[:id]
-    @task.update_attributes task_params
-    # if @task.update(task_params)
-    #   render json: @task
-    # else
-    #   render json: @task.errors, status: :unprocessable_entity
+    # @task = Task.find params[:id]
+    # @task.update_attributes task_params
+    if @task.update(task_params)
+      render json: @task
+    else
+      render json: @task.errors, status: :unprocessable_entity
+    end
   end
 
   # DELETE /tasks/1
