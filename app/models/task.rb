@@ -17,6 +17,7 @@ class Task < ApplicationRecord
 	  numericality: {
 	  	only_integer: true,
 	  	less_than_or_equal_to: 9999,
+	  	more_than_or_equal_to: -9999
 	  }
 
   #checked
