@@ -12,14 +12,9 @@ bundle exec rake db:migrate
 
 bundle exec rails server
 
-
 gemfile:
-
 gem 'bcrypt', '~> 3.1.7'		//шифрування
-
 gem 'rack-cors'             //ajax
-
-
 
 config/aplication.rb =>
   config.middleware.insert_before 0, Rack::Cors do
@@ -29,17 +24,10 @@ config/aplication.rb =>
     end
   end
 
-
-
-
 ?echo fs.inotify.max_user_watches=524288 | sudo tee -a /etc/sysctl.conf && sudo sysctl -p
-?												//якщо не робить сервер
+?			-		 якщо не робить сервер
 
-
-
-
-	//запрос
-curl -H "Content-Type:application/json; charset=utf-8" -X POST -d '{ "title":"nbnb" }' http://localhost:3000/tasks
+curl -H "Content-Type:application/json; charset=utf-8" -X POST -d '{ "title":"nbnb" }' http://localhost:3000/tasks 		-		 запит
 
 rails generate model User email:string username:string firstname:string lastname:string   -   новий файл міграції
 
@@ -47,7 +35,7 @@ bundle exec rake db:migrate   -   міграція
 
 bundle exec rake db:rollback   -   відкат міграції
 
-rails console --sandbox   -   rails пісочниця. Any modifications you make will be rolled back on exit
+>>rails console --sandbox   -   пісочниця. Any modifications you make will be rolled back on exit
 
 --------------------------------------------------------------------------------------
 
