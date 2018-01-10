@@ -1,0 +1,5 @@
+Hi, <%= @user.lastname %>
+<br>
+Email confirmation:
+<br>
+<%= link_to("Confirm my Email", "#{@origin}/#/users/email_confirm?email_token=#{@user.token}") %>

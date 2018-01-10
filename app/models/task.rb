@@ -1,6 +1,6 @@
 class Task < ApplicationRecord
 
-	belongs_to :user
+	#belongs_to :user
 
 	# checked
   validates :title, presence: true,

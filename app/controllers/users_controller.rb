@@ -17,6 +17,9 @@ class UsersController < ApplicationController
 		user.token = SecureRandom.hex(15)
 
   	if user.save
+  		origin = request.headers['origin']
+      UserMailer.registration_confirmation(user, origin).deliver
+      render :show, status: :ok
   		# p '*************'
   	else
     	render json: User.create(user_params).errors, status: 404
