@@ -17,7 +17,9 @@ class UsersController < ApplicationController
 		user.token = SecureRandom.hex(15)
 
   	if user.save
+      #сайт з якого ми прийшли
   		origin = request.headers['origin']
+      #визиваєм функцію registration_confirmation з класа юзер мейл
       UserMailer.registration_confirmation(user, origin).deliver
       render :show, status: :ok
   		# p '*************'
