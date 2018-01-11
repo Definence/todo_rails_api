@@ -3,8 +3,8 @@ class UserMailer < ActionMailer::Base
 
   def registration_confirmation(user, origin)
     # назначення глобальних змінних для використання у вюшкі
-    # @user = user
-    # @origin = origin
+    @user = user
+    @origin = origin
     mail(:to => "#{user.firstname} <#{user.email}>", :subject => "Registration Confirmation")
   end
 end
