@@ -5,6 +5,6 @@ class UserMailer < ActionMailer::Base
     # назначення глобальних змінних для використання у вюшкі
     @user = user
     @origin = origin
-    mail(:to => "#{user.firstname} <#{user.email}>", :subject => "Registration Confirmation")
+    mail(:to => "#{user.full_name} <#{user.email}>", :subject => "Registration Confirmation")
   end
 end

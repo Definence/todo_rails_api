@@ -1,5 +1,9 @@
 class User < ActiveRecord::Base
 
+	def full_name
+		"#{firstname} #{lastname}"
+	end
+
   # has_many :tasks
 
   has_secure_password

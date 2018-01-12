@@ -14,15 +14,19 @@ class UsersController < ApplicationController
 
   def create
     user = User.new(user_params)
+
+  #   redirect_to tasks_path
 		user.token = SecureRandom.hex(15)
+
 
   	if user.save
       #сайт з якого ми прийшли
   		origin = request.headers['origin']
       #визиваєм функцію registration_confirmation з класа юзер мейл
       UserMailer.registration_confirmation(user, origin).deliver
-      render :show, status: :ok
+      #render :show, status: :ok
   		# p '*************'
+
   	else
     	render json: User.create(user_params).errors, status: 404
   	end
