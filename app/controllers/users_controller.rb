@@ -22,12 +22,17 @@ class UsersController < ApplicationController
     user = User.find_by(email: params[:session][:email].downcase)
     # перевіряє наявність юзера і перевіряє відповідність паролей
     if user && user.authenticate(params[:session][:password])
-      token = SecureRandom.hex(15)
-      user.attributes = {token: token}
+      token = user.token
+
+      #присвоєння нового токена
+      # token = SecureRandom.hex(15)
+      # user.attributes = {token: token}
+      # user.save(validate: false)
       # p token
-      user.save(validate: false)
+
       # виводить дані на фронтенд
       render json: {
+        # user_id: user.id,
         token: token,
         message: 'Login successfully',
         status: 201

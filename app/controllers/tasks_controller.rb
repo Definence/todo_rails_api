@@ -3,6 +3,7 @@ class TasksController < ApplicationController
 
   # GET /tasks
   def index
+    # user = User.find_by(token: params[:session][:token])
     @tasks = Task.all
     render json: @tasks
   end

@@ -4,7 +4,7 @@ class User < ActiveRecord::Base
 		"#{firstname} #{lastname}"
 	end
 
-  has_many :tasks
+  # has_many :tasks
 
   has_secure_password
 
