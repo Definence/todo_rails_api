@@ -1,24 +1,10 @@
 class UsersController < ApplicationController
-  def index
-  end
 
-  def new
-  	# @user = User.new(user_params)
-
-  	# if @user.save
-   #    render json: @user, status: :created, location: @user
-   #  else
-   #    render json: @user.errors, status: :unprocessable_entity
-   #  end
-  end
-
-  def create
+  def sign_up
     user = User.new(user_params)
-
-  #   redirect_to tasks_path
+    #присвоєння токена
 		user.token = SecureRandom.hex(15)
-
-
+    #mailer
   	if user.save
       #сайт з якого ми прийшли
   		origin = request.headers['origin']
@@ -26,13 +12,31 @@ class UsersController < ApplicationController
       UserMailer.registration_confirmation(user, origin).deliver
       #render :show, status: :ok
   		# p '*************'
-
   	else
     	render json: User.create(user_params).errors, status: 404
   	end
   end
 
-  def update
+  def sign_in
+    # шукає юзера по імейлу(інпут з бекенду) і назначає в перемінну
+    user = User.find_by(email: params[:session][:email].downcase)
+    # перевіряє наявність юзера і перевіряє відповідність паролей
+    if user && user.authenticate(params[:session][:password])
+      token = SecureRandom.hex(15)
+      user.attributes = {token: token}
+      # p token
+      user.save(validate: false)
+      # виводить дані на фронтенд
+      render json: {
+        token: token,
+        message: 'Login successfully',
+        status: 201
+      }
+      # render json: {
+      #   token: token,
+      #   message: 'Login successfully'
+      # }, status: 201
+    end
   end
 
   private
