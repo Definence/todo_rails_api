@@ -11,7 +11,6 @@ class UsersController < ApplicationController
       #визиваєм функцію registration_confirmation з класа юзер мейл
       UserMailer.registration_confirmation(user, origin).deliver
       #render :show, status: :ok
-  		# p '*************'
   	else
     	render json: User.create(user_params).errors, status: 404
   	end
@@ -23,13 +22,6 @@ class UsersController < ApplicationController
     # перевіряє наявність юзера і перевіряє відповідність паролей
     if user && user.authenticate(params[:session][:password])
       token = user.token
-
-      #присвоєння нового токена
-      # token = SecureRandom.hex(15)
-      # user.attributes = {token: token}
-      # user.save(validate: false)
-      # p token
-
       # виводить дані на фронтенд
       render json: {
         # user_id: user.id,
@@ -37,10 +29,6 @@ class UsersController < ApplicationController
         message: 'Login successfully',
         status: 201
       }
-      # render json: {
-      #   token: token,
-      #   message: 'Login successfully'
-      # }, status: 201
     end
   end
 

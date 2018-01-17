@@ -1,33 +1,34 @@
 class TasksController < ApplicationController
+  # виконує перед контролерами [] сет таск
   before_action :set_task, only: [:show, :update, :destroy]
 
-  # GET /tasks
   def index
-    # user = User.find_by(token: params[:session][:token])
-    @tasks = Task.all
-    render json: @tasks
-  end
-
-  # GET /tasks/1
-  def show
-    render json: @task
-  end
-
-  # POST /tasks
-  def create
-    @task = Task.new(task_params)
-
-    if @task.save
-      render json: @task, status: :created, location: @task
+    tasks = current_user.tasks.all
+    if tasks
+      render json: tasks, status: 200
     else
-      render json: @task.errors, status: :unprocessable_entity
+      return head(:bad_request)
     end
   end
 
-  # PATCH/PUT /tasks/1
+  def show
+    if @task
+      render json: @task, status: 200
+    else
+      return head(:bad_request)
+    end
+  end
+
+  def create
+    task = current_user.tasks.new(task_params)
+    if task.save
+      render json: task, status: :created, location: task
+    else
+      return head(:bad_request)
+    end
+  end
+
   def update
-    # @task = Task.find params[:id]
-    # @task.update_attributes task_params
     if @task.update(task_params)
       render json: @task
     else
@@ -35,20 +36,21 @@ class TasksController < ApplicationController
     end
   end
 
-  # DELETE /tasks/1
   def destroy
-    @task = Task.find params[:id]
-    @task.destroy
+    if @task.destroy
+      return head(:ok)
+    else
+      return head(:bad_request)
+    end
   end
 
   private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_task
-      @task = Task.find(params[:id])
-    end
 
-    # Only allow a trusted parameter "white list" through.
-    def task_params
-      params.require(:task).permit(:title, :description, :priority, :active, :due_date, :user_id)
-    end
+  def set_task
+    @task = current_user.tasks.find(params[:id])
+  end
+
+  def task_params
+    params.require(:task).permit(:title, :description, :priority, :active, :due_date)
+  end
 end
