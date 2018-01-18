@@ -29,6 +29,12 @@ class UsersController < ApplicationController
         message: 'Login successfully',
         status: 201
       }
+    else
+      render json: {
+        token: 'guest',
+        message: 'Login failed',
+        status: 500
+      }
     end
   end
 
