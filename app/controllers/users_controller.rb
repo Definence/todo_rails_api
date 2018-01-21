@@ -22,13 +22,27 @@ class UsersController < ApplicationController
     # перевіряє наявність юзера і перевіряє відповідність паролей
     if user && user.authenticate(params[:session][:password])
       token = user.token
+      username = user.username
+      confirmed = user.confirmed
+
       # виводить дані на фронтенд
-      render json: {
-        # user_id: user.id,
+
+      if confirmed
+        render json: {
+        username: username,
         token: token,
         message: 'Login successfully',
         status: 201
-      }
+        }
+      else
+        render json: {
+        username: username,
+        token: token,
+        message: 'Confirm your email',
+        status: 207
+        }
+      end
+
     else
       render json: {
         token: 'guest',

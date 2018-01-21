@@ -87,7 +87,7 @@ gemfile:
 
 Генерація(addition) токен
 
-> 	rails generate migration add_token_to_users token:string
+> 	rails generate migration add_token_to_users token:string default:false
 
 
 міграція:
