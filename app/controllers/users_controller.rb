@@ -1,4 +1,5 @@
 class UsersController < ApplicationController
+  skip_before_action :authenticate_user!, only: :create
 
   def sign_up
     user = User.new(user_params)

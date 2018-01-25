@@ -1,6 +1,10 @@
 Rails.application.routes.draw do
 
-  resources :tasks
+  resources :tasks do
+    collection do
+      post :batch_destroy
+    end
+  end
 
   resources :users do
     collection do

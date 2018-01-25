@@ -1,9 +1,14 @@
 class TasksController < ApplicationController
+  # замінили на expose
   # виконує перед контролерами [] сет таск
-  before_action :set_task, only: [:show, :update, :destroy]
+  # before_action :set_task, only: [:show, :update, :destroy]
+
+  expose :task, -> { current_user.tasks.find(params[:id]) }
+  expose :tasks, -> { current_user.tasks.all }
+
 
   def index
-    tasks = current_user.tasks.all
+    # tasks = current_user.tasks.all
     if tasks
       render json: tasks, status: 200
     else
@@ -12,8 +17,8 @@ class TasksController < ApplicationController
   end
 
   def show
-    if @task
-      render json: @task, status: 200
+    if task
+      render json: task, status: 200
     else
       return head(:bad_request)
     end
@@ -29,15 +34,23 @@ class TasksController < ApplicationController
   end
 
   def update
-    if @task.update(task_params)
-      render json: @task
+    if task.update(task_params)
+      render json: task
     else
-      render json: @task.errors, status: :unprocessable_entity
+      render json: task.errors, status: :unprocessable_entity
     end
   end
 
   def destroy
-    if @task.destroy
+    if task.destroy
+      return head(:ok)
+    else
+      return head(:bad_request)
+    end
+  end
+
+  def batch_destroy
+    if current_user.tasks.where(id: params[:ids]).destroy_all
       return head(:ok)
     else
       return head(:bad_request)
@@ -46,11 +59,19 @@ class TasksController < ApplicationController
 
   private
 
-  def set_task
-    @task = current_user.tasks.find(params[:id])
-  end
+    # замінили на expose
+    # def set_task
+    #   замінив на expose(:task)
+    #   @id = params[:id]
+    #   @task = current_user.tasks.find(@id)
 
-  def task_params
-    params.require(:task).permit(:title, :description, :priority, :active, :due_date)
-  end
+    #   # для масиву ід
+    #   if @id && @id.kind_of?(Array)
+    #     # назначає в таски в перемінну. where = find(in plural)
+    #     @tasks = current_user.tasks.where(id: @id)
+    # end
+
+    def task_params
+      params.require(:task).permit(:title, :description, :priority, :active, :due_date)
+    end
 end
