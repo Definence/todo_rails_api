@@ -1,5 +1,5 @@
 class UsersController < ApplicationController
-  skip_before_action :authenticate_user!, only: :create
+  skip_before_action :authenticate_user!, only: [:create, :email_confirmation]
 
   def create
     user = User.new(user_params)
@@ -17,6 +17,15 @@ class UsersController < ApplicationController
   	end
   end
 
+  def email_confirmation
+    user = User.find_by_token(params[:user])
+    user.confirmed = true
+    if user.save
+      render_api(200)
+    else
+      render_api(404)
+    end
+  end
 
   private
 
