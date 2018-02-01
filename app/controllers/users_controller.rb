@@ -3,28 +3,33 @@ class UsersController < ApplicationController
 
   def create
     user = User.new(user_params)
-    email_exists = User.find_by(email: user.email)
-    if !email_exists
-      username_exists = User.find_by(username: user.username)
-      if !username_exists
-        #присвоєння токена
-        user.token = SecureRandom.hex(15)
-        #mailer
-        if user.save
-          #сайт з якого ми прийшли
-          origin = request.headers['origin']
-          #визиваєм функцію registration_confirmation з класа юзер мейл
-          UserMailer.registration_confirmation(user, origin).deliver
-          render_api({ message: 'You have successfully signed up. Confirm your email' }, 200)
+    if user.password === user.password_confirmation
+      email_exists = User.find_by(email: user.email)
+      if !email_exists
+        username_exists = User.find_by(username: user.username)
+        if !username_exists
+          #присвоєння токена
+          user.token = SecureRandom.hex(15)
+          #mailer
+          if user.save
+            #сайт з якого ми прийшли
+            origin = request.headers['origin']
+            #визиваєм функцію registration_confirmation з класа юзер мейл
+            UserMailer.registration_confirmation(user, origin).deliver
+            render_api({ message: 'You have successfully signed up. Confirm your email' }, 200)
+          else
+            render json: User.create(user_params).errors, status: 404
+          end
         else
-          render json: User.create(user_params).errors, status: 404
+          render_api({ message: 'Username has already been taken' }, 207)
         end
       else
-        render_api({ message: 'Username has already been taken' }, 207)
+        render_api({ message: 'Email has already been taken' }, 207)
       end
     else
-      render_api({ message: 'Email has already been taken' }, 207)
+      render_api({ message: 'Passwords do not match' }, 207)
     end
+
   end
 
   def email_confirmation
