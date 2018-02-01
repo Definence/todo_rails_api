@@ -10,14 +10,15 @@ class SessionsController < ApplicationController
         if user.confirmed
           render_api(user, 200, serializer: SessionSerializer)
         else
-          render json: { message: 'Confirm your email' }, status: 207
+          render_api({ message: 'Confirm your email' }, 207)
         end
       else
-        render json: { message: 'Wrong email or password' }, status: 400
+        # render json: { message: 'Wrong email or password' }, status: 400
+        render_api({ message: 'Wrong email or password' }, 207)
       end
     else
-      render json: { message: 'User does not exist' }, status: 204
-      # render_api({ message: I18n.t('User does not exist') }, 204)
+      # render json: { message: 'User does not exist' }, status: 204
+      render_api({ message: 'User does not exist' }, 207)
     end
   end
 
