@@ -2,27 +2,21 @@ class Task < ApplicationRecord
 
 	belongs_to :user
 
-	# checked
   validates :title, presence: true,
 	  length: {
 	  	minimum: 5,
-	  	maximum: 30,
-	  	too_long: "Thirty characters is the maximum allowed",
-	  	too_short: "Five characters is the minimum allowed"
+	  	maximum: 30
 	  }
 
-  # checked
 	validates :description, presence:true
 
-	# checked
   validates :priority, presence: true,
 	  numericality: {
 	  	only_integer: true,
-	  	less_than_or_equal_to: 9999,
-	  	more_than_or_equal_to: -9999
+	  	less_than_or_equal_to: 3,
+	  	more_than_or_equal_to: 1
 	  }
 
-  #checked
   validates :due_date, presence: true
 
 end

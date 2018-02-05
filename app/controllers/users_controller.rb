@@ -1,8 +1,17 @@
 class UsersController < ApplicationController
   skip_before_action :authenticate_user!, only: [:create, :email_confirmation]
 
+  expose :user, -> { User.find_by_token(params[:user]) }
+
   def create
     user = User.new(user_params)
+    # вивід помилок моделі
+    # p user.valid?
+    # p user.errors.messages
+    # render_api({ message: user.errors.messages }, 207)
+    # or
+    # render json: { errors: user.errors.messages }, status: 404
+
     if user.password === user.password_confirmation
       email_exists = User.find_by(email: user.email)
       if !email_exists
@@ -29,21 +38,12 @@ class UsersController < ApplicationController
     else
       render_api({ message: 'Passwords do not match' }, 207)
     end
-
   end
 
   def email_confirmation
-    user = User.find_by_token(params[:user])
-    if !user.confirmed
-      user.confirmed = true
-      if user.save
-        render_api({ message: 'You have confirmed your email' }, 200)
-      else
-        render_api(404)
-      end
-    else
-      render_api({ message: 'Email is already confirmed' }, 200)
-    end
+    return render_api({ message: 'Email is already confirmed' }, 200) if user && user.confirmed
+    return render_api({ message: 'You have confirmed your email' }, 200) if user && user.update_column(:confirmed, true)
+    render_api(404)
   end
 
   private

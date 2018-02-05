@@ -74,29 +74,29 @@ gemfile:
 >		rails generate model User email:string username:string firstname:string lastname:string
 
 
-Генерація контролерів user
+Генерація контролерів user:
 
 > 	bundle exec rails g controller users index new create update
 
 
-Генерація(addition) надійого насла
+Генерація(addition) надійого насла:
 
 > 	rails generate migration add_password_digest_to_users password_digest:string
 
 
-Генерація(addition) токен
+Генерація(addition) токен:
 
 > 	rails generate migration add_token_to_users token:string default:false
 
 
 міграція:
 
->		bundle exec rake db:migrate
+>		bundle exec rake db:migrate:
 
 
 відкат міграції:
 
->		bundle exec rake db:rollback
+>		bundle exec rake db:rollback:
 
 
 пісочниця. Any modifications you make will be rolled back on exit:
@@ -111,9 +111,11 @@ gemfile:
 
 ----------------------------------------------------------------------------------------
 
-рейлс консоль
+рейлс консоль:
 
 > 	rails c
+
+>		exit
 
 
 створення user через cmd:
@@ -251,43 +253,81 @@ reload оновлює інфо з бд. без сейва воно відкат�
 >		=> "2013-03-11 01:37:32"
 
 
-видалити всіх користувачів
+видалити всіх користувачів:
 
 >		User.destroy_all
 
 ------------------------------------------------------------------------------------------
 
 
-	ТЕСТИ:
+	Rspec(https://github.com/rspec/rspec-rails#rspec-rails--):
 
 
 ------------------------------------------------------------------------------------------
 
 Gemfile:
 
->		gem 'rspec-rails', '~> 3.6'
+>		group :development, :test do
+>		  gem 'rspec-rails', '~> 3.7'
+>		end
 
 
-Генерація файлу теста:
-
-> 	rails generate integration_test user_pages
+>		bundle install
 
 
-Запуск тесту:
+Initialize the spec/ directory:
 
-> 	bundle exec rspec spec/requests/user_pages_spec.rb
+>		rails generate rspec:install
 
 
-Запуск всіх тестів директорії
+To run spec:
+
+>		bundle exec rspec
+
+>		bundle exec rspec spec/requests/user_pages_spec.rb
 
 >	  bundle exec rspec spec/requests/
 
+------------------------------------------------------------------------------------------
 
-Запуск всіх тестів(2 варіанти)
 
-> 	bundle exec rspec spec/
+	Shoulda-matchers (https://github.com/thoughtbot/shoulda-matchers):
 
-> 	bundle exec rake spec
+
+------------------------------------------------------------------------------------------
+
+Gemfile:
+
+>		group :test do
+>		  gem 'shoulda-matchers', '~> 3.1'
+>		end
+
+
+rails_helper.rb: =>
+
+Shoulda::Matchers.configure do |config|
+  config.integrate do |with|
+    # Choose a test framework:
+    with.test_framework :rspec
+    with.test_framework :minitest
+    with.test_framework :minitest_4
+    with.test_framework :test_unit
+
+    # Choose one or more libraries:
+    with.library :active_record
+    with.library :active_model
+    with.library :action_controller
+    # Or, choose the following (which implies all of the above):
+    with.library :rails
+  end
+end
+
+
+Example:
+
+>		RSpec.describe Person, type: :model do
+>		  it { should validate_presence_of(:name) }
+>		end
 
 ------------------------------------------------------------------------------------------
 
@@ -308,7 +348,6 @@ Gemfile:
 \z  соответствует концу строки
 / конец регулярного выражения
 i нечувствительность к регистру
-
 ------------------------------------------------------------------------------------------
 
 
