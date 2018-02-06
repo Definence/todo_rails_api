@@ -43,7 +43,6 @@ Rails.application.configure do
     address:              'smtp.gmail.com',
     port:                 587,
     domain:               'gmail.com',
-    # user_name:            'todolist0011@gmail.com',
     user_name:            'milestep.mailer@gmail.com',
     password:             'Milestep_92',
     authentication:       :plain,
