@@ -21,11 +21,11 @@ class UsersController < ApplicationController
           user.token = SecureRandom.hex(15)
           #mailer
           if user.save
+            render_api({ message: 'You have successfully signed up. Confirm your email' }, 200)
             #сайт з якого ми прийшли
             origin = request.headers['origin']
             #визиваєм функцію registration_confirmation з класа юзер мейл
             UserMailer.registration_confirmation(user, origin).deliver
-            render_api({ message: 'You have successfully signed up. Confirm your email' }, 200)
           else
             render json: User.create(user_params).errors, status: 404
           end
