@@ -46,7 +46,7 @@ Rails.application.configure do
   config.file_watcher = ActiveSupport::EventedFileUpdateChecker
 
   config.action_mailer.raise_delivery_errors = false
-  config.action_mailer.default_url_options = {:host => 'https://todo-react-api.herokuapp.com/'}
+  config.action_mailer.default_url_options = {:host => 'localhost:3000'}
   config.action_mailer.delivery_method = :smtp
   config.action_mailer.perform_deliveries = true
   config.action_mailer.raise_delivery_errors = true
@@ -55,8 +55,8 @@ Rails.application.configure do
     address:              'smtp.gmail.com',
     port:                 587,
     domain:               'gmail.com',
-    user_name:            'todolist0011@gmail.com',
-    password:             'todo00111',
+    user_name:            'milestep.mailer@gmail.com',
+    password:             'Milestep_92',
     authentication:       :plain,
     enable_starttls_auto: true
   }
