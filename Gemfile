@@ -16,7 +16,7 @@ gem 'decent_exposure'
 gem 'active_model_serializers'
 # Use Capistrano for deployment
 # gem 'capistrano-rails', group: :development
-  gem 'listen', '~> 3.0.5'
+gem 'listen', '~> 3.0.5'
 gem 'rack-cors'
 
 group :development, :test do
