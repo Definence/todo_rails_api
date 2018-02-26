@@ -85,7 +85,7 @@ gemfile:
 > 	bundle exec rails g controller users index new create update
 
 
-Генерація(addition) надійого насла:
+Генерація(addition) надійого гасла:
 
 > 	rails generate migration add_password_digest_to_users password_digest:string
 
@@ -418,7 +418,7 @@ or
 
 ------------------------------------------------------------------------------------------
 
-Gem:
+Gemfile:
 
 >		gem 'decent_exposure'
 
@@ -426,5 +426,27 @@ Gem:
 Expose(щось схоже на функцію):
 
 >		expose :tasks, -> { current_user.tasks.all }
+
+------------------------------------------------------------------------------------------
+
+
+  Figaro(or dotenv):
+
+
+------------------------------------------------------------------------------------------
+
+Gemfile:
+
+>   gem "figaro"
+
+
+Terminal:
+
+>   bundle exec figaro install
+
+
+More details:
+
+>   https://github.com/laserlemon/figaro
 
 ------------------------------------------------------------------------------------------
