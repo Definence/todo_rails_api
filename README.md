@@ -14,299 +14,299 @@
 
 створення проекту:
 
->		rails new rails_api-react_client --api --database=postgresql
+>  rails new rails_api-react_client --api --database=postgresql
 
 
 перехід в папку:
 
->		cd /your/app/path
+>  cd /your/app/path
 
 
 створення моделей:
 
->		bin/rails g scaffold task title:string description:string priority:integer active:boolean due_date:date user_id:integer
+>  bin/rails g scaffold task title:string description:string priority:integer active:boolean due_date:date user_id:integer
 
 
 встановлення бандл:
 
->		bundle install
+>  bundle install
 
 
 створення бд:
 
->		bundle exec rake db:create
+>  bundle exec rake db:create
 
 
 міграція бд:
 
->		bundle exec rake db:migrate
+>  bundle exec rake db:migrate
 
 
 сервер:
 
->		bundle exec rails server
+>  bundle exec rails server
 
 
 gemfile:
 
->		gem 'bcrypt', '~> 3.1.7'		//шифрування
+>  gem 'bcrypt', '~> 3.1.7'  //шифрування
 
->		gem 'rack-cors'             //ajax
+>  gem 'rack-cors'             //ajax
 
 
 конфиг:
 
->	 	config/aplication.rb =>
-		  config.middleware.insert_before 0, Rack::Cors do
-		    allow do
-		      origins '*'
-		      resource '*', :headers => :any, :methods => [:get, :post, :options, :patch]
-		    end
-		  end
+>   config/aplication.rb =>
+>    config.middleware.insert_before 0, Rack::Cors do
+>      allow do
+>        origins '*'
+>        resource '*', :headers => :any, :methods => [:get, :post, :options, :patch]
+>      end
+>    end
 
 
 ?якщо не робить сервер?:
 
->		echo fs.inotify.max_user_watches=524288 | sudo tee -a /etc/sysctl.conf && sudo sysctl -p
+>  echo fs.inotify.max_user_watches=524288 | sudo tee -a /etc/sysctl.conf && sudo sysctl -p
 
 
 запит:
 
->		curl -H "Content-Type:application/json; charset=utf-8" -X POST -d '{ "title":"nbnb" }' http://localhost:3000/tasks
+>  curl -H "Content-Type:application/json; charset=utf-8" -X POST -d '{ "title":"nbnb" }' http://localhost:3000/tasks
 
 
 новий файл міграції:
 
->		rails generate model User email:string username:string firstname:string lastname:string
+>  rails generate model User email:string username:string firstname:string lastname:string
 
 
 Генерація контролерів user:
 
-> 	bundle exec rails g controller users index new create update
+>  bundle exec rails g controller users index new create update
 
 
 Генерація(addition) надійого гасла:
 
-> 	rails generate migration add_password_digest_to_users password_digest:string
+>  rails generate migration add_password_digest_to_users password_digest:string
 
 
 Генерація(addition) токен:
 
-> 	rails generate migration add_token_to_users token:string default:false
+>  rails generate migration add_token_to_users token:string default:false
 
 
 міграція:
 
->		bundle exec rake db:migrate:
+>  bundle exec rake db:migrate:
 
 
 відкат міграції:
 
->		bundle exec rake db:rollback:
+>  bundle exec rake db:rollback:
 
 
 пісочниця. Any modifications you make will be rolled back on exit:
 
->		rails console --sandbox
+>  rails console --sandbox
 
 ----------------------------------------------------------------------------------------
 
 
-	КОМАНДИ З БД:
+ КОМАНДИ З БД:
 
 
 ----------------------------------------------------------------------------------------
 
 рейлс консоль:
 
-> 	rails c
+>  rails c
 
->		exit
+>  exit
 
 
 створення user через cmd:
 
->		User.new
+>  User.new
 
->		=> #<User id: nil, name: nil, email: nil, created_at: nil, updated_at: nil>
+>  => #<User id: nil, name: nil, email: nil, created_at: nil, updated_at: nil>
 
->		user = User.new(username: "Michael Hartl", email: "mhartl@example.com")
+>  user = User.new(username: "Michael Hartl", email: "mhartl@example.com")
 
->		=> #<User id: nil, name: "Michael Hartl", email: "mhartl@example.com", created_at: nil, updated_at: nil>
+>  => #<User id: nil, name: "Michael Hartl", email: "mhartl@example.com", created_at: nil, updated_at: nil>
 
 
 щоб зберегти зміни з памяті рубі в бд:
 
->		user.save
+>  user.save
 
 
 для перегляду юзер:
 
->		user
+>  user
 
 
 для перегляду email:
 
->		user.email
+>  user.email
 
 
 ?те заме що і нью разом з сейв?:
 
->		User.create
+>  User.create
 
->		User.create(name: "A Nother", email: "another@example.org")
+>  User.create(name: "A Nother", email: "another@example.org")
 
-> 	=> #<User id: 2, name: "A Nother", email: "another@example.org", created_at: "2013-03-11 01:05:24", updated_at: "2013-03-11 01:05:24">
+>  => #<User id: 2, name: "A Nother", email: "another@example.org", created_at: "2013-03-11 01:05:24", updated_at: "2013-03-11 01:05:24">
 
 
 створює фу(перемінна):
 
->		foo = User.create(name: "Foo", email: "foo@bar.com")
+>  foo = User.create(name: "Foo", email: "foo@bar.com")
 
->		=> #<User id: 3, name: "Foo", email: "foo@bar.com", created_at: "2013-03-11 01:05:42", updated_at: "2013-03-11 01:05:42">
+>  => #<User id: 3, name: "Foo", email: "foo@bar.com", created_at: "2013-03-11 01:05:42", updated_at: "2013-03-11 01:05:42">
 
 
 видаляє фуу:
 
-> 	foo.destroy
+>  foo.destroy
 
->		=> #<User id: 3, name: "Foo", email: "foo@bar.com", created_at: "2013-03-11 01:05:42", updated_at: "2013-03-11 01:05:42">
+>  => #<User id: 3, name: "Foo", email: "foo@bar.com", created_at: "2013-03-11 01:05:42", updated_at: "2013-03-11 01:05:42">
 
 
 пошук по id:
 
-> 	User.find(3)
+>  User.find(3)
 
 
 пошук по атрибуту:
 
-> 	User.find_by_email("mhartl@example.com")
+>  User.find_by_email("mhartl@example.com")
 
 
 перший користувач:
 
-> 	User.first
+>  User.first
 
 
 всі користувачі:
 
-> 	User.all
+>  User.all
 
 
 редагування одного з атрибутів:
 
-> 	user
+>  user
 
->		=> #<User id: 1, name: "Michael Hartl", email: "mhartl@example.com", created_at: "2013-03-11 00:57:46", updated_at: "2013-03-11 00:57:46">
-> 	user.email = "mhartl@example.net"
+>  => #<User id: 1, name: "Michael Hartl", email: "mhartl@example.com", created_at: "2013-03-11 00:57:46", updated_at: "2013-03-11 00:57:46">
+>  user.email = "mhartl@example.net"
 
->		=> "mhartl@example.net"
+>  => "mhartl@example.net"
 
-> 	user.save
+>  user.save
 
->		=> true
+>  => true
 
 
 2 спосіб редагування(всі атрибути):
 
-> 	user.update_attributes(name: "The Dude", email: "dude@abides.org")
+>  user.update_attributes(name: "The Dude", email: "dude@abides.org")
 
->		=> true
+>  => true
 
-> 	user.name
+>  user.name
 
->		=> "The Dude"
+>  => "The Dude"
 
-> 	user.email
+>  user.email
 
->		=> "dude@abides.org"
+>  => "dude@abides.org"
 
 
 2 спосіб редагування(1 атрибут):
 
->		user.update_attribute(:name, "The Dude")
+>  user.update_attribute(:name, "The Dude")
 
->		=> true
+>  => true
 
-> 	user.name
+>  user.name
 
->	  => "The Dude"
+>   => "The Dude"
 
 
 reload оновлює інфо з бд. без сейва воно відкатює зміни:
 
->		user.email
+>  user.email
 
->		=> "mhartl@example.net"
+>  => "mhartl@example.net"
 
-> 	user.email = "foo@bar.com"
+>  user.email = "foo@bar.com"
 
->		=> "foo@bar.com"
+>  => "foo@bar.com"
 
-> 	user.reload.email
+>  user.reload.email
 
-> 	=> "mhartl@example.net"
+>  => "mhartl@example.net"
 
 
 виводить час оновлення та створення:
 
-> 	user.created_at
+>  user.created_at
 
->		=> "2013-03-11 00:57:46"
+>  => "2013-03-11 00:57:46"
 
->		user.updated_at
+>  user.updated_at
 
->		=> "2013-03-11 01:37:32"
+>  => "2013-03-11 01:37:32"
 
 
 видалити всіх користувачів:
 
->		User.destroy_all
+>  User.destroy_all
 
 ------------------------------------------------------------------------------------------
 
 
-	Rspec(https://github.com/rspec/rspec-rails#rspec-rails--):
+ Rspec(https://github.com/rspec/rspec-rails#rspec-rails--):
 
 
 ------------------------------------------------------------------------------------------
 
 Gemfile:
 
->		group :development, :test do
->		  gem 'rspec-rails', '~> 3.7'
->		end
+>  group :development, :test do
+>    gem 'rspec-rails', '~> 3.7'
+>  end
 
 
->		bundle install
+>  bundle install
 
 
 Initialize the spec/ directory:
 
->		rails generate rspec:install
+>  rails generate rspec:install
 
 
 To run spec:
 
->		bundle exec rspec
+>  bundle exec rspec
 
->		bundle exec rspec spec/requests/user_pages_spec.rb
+>  bundle exec rspec spec/requests/user_pages_spec.rb
 
->	  bundle exec rspec spec/requests/
+>   bundle exec rspec spec/requests/
 
 ------------------------------------------------------------------------------------------
 
 
-	Shoulda-matchers (https://github.com/thoughtbot/shoulda-matchers):
+ Shoulda-matchers (https://github.com/thoughtbot/shoulda-matchers):
 
 
 ------------------------------------------------------------------------------------------
 
 Gemfile:
 
->		group :test do
->		  gem 'shoulda-matchers', '~> 3.1'
->		end
+>  group :test do
+>    gem 'shoulda-matchers', '~> 3.1'
+>  end
 
 
 rails_helper.rb: =>
@@ -331,9 +331,9 @@ end
 
 Example:
 
->		RSpec.describe Person, type: :model do
->		  it { should validate_presence_of(:name) }
->		end
+>  RSpec.describe Person, type: :model do
+>     it { should validate_presence_of(:name) }
+>  end
 
 ------------------------------------------------------------------------------------------
 
@@ -357,7 +357,7 @@ i нечувствительность к регистру
 ------------------------------------------------------------------------------------------
 
 
-	Mailer для development(for tests - опціонально):
+ Mailer для development(for tests - опціонально):
 
 
 ------------------------------------------------------------------------------------------
@@ -376,7 +376,7 @@ end
 ------------------------------------------------------------------------------------------
 
 
-	UserSerializer(Serializer):
+ UserSerializer(Serializer):
 
 
 ------------------------------------------------------------------------------------------
@@ -388,44 +388,44 @@ end
 
 gems:
 
->		gem 'active_model_serializers'
+>  gem 'active_model_serializers'
 
 
 next:
 
->		mkdir app/serializers
+>  mkdir app/serializers
 
-> 	user_serializer.rb
+>  user_serializer.rb
 
->		class UserSerializer < ActiveModel::Serializer
->  		 attributes :username, :token
-> 		 # attributes :id, :email, :username, :firstname, :lastname, :token
->		end
+>  class UserSerializer < ActiveModel::Serializer
+>     attributes :username, :token
+>    # attributes :id, :email, :username, :firstname, :lastname, :token
+>  end
 
 for using(can be each_serializer!):
 
->		render json: user, serializer: UserSerializer, status: :created
+>  render json: user, serializer: UserSerializer, status: :created
 
 or
 
->		render_api(user, :created, serializer: UserSerializer)
+>  render_api(user, :created, serializer: UserSerializer)
 
 ------------------------------------------------------------------------------------------
 
 
-	Expose:
+ Expose:
 
 
 ------------------------------------------------------------------------------------------
 
 Gemfile:
 
->		gem 'decent_exposure'
+>  gem 'decent_exposure'
 
 
 Expose(щось схоже на функцію):
 
->		expose :tasks, -> { current_user.tasks.all }
+>  expose :tasks, -> { current_user.tasks.all }
 
 ------------------------------------------------------------------------------------------
 
@@ -493,5 +493,10 @@ Setting env variables on heroku:
 >   heroku config:get GITHUB_USERNAME
 
 >   heroku config:unset GITHUB_USERNAME
+
+
+For more details(with env variables):
+
+>   https://devcenter.heroku.com/articles/config-vars
 
 ------------------------------------------------------------------------------------------
