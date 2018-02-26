@@ -450,3 +450,48 @@ More details:
 >   https://github.com/laserlemon/figaro
 
 ------------------------------------------------------------------------------------------
+
+
+  DotEnv(or figaro):
+
+
+------------------------------------------------------------------------------------------
+
+Gemfile:
+
+>   group :development, :test do
+>     gem 'dotenv-rails'
+>   end
+
+
+.env(project's root directory):
+
+>   PASSWORD=h4lpd4skpw0rd
+
+
+For using anywhere in your project:
+
+>   ENV["PASSWORD"]
+
+
+Gitignore:
+
+>   /.env
+
+
+More details:
+
+>   https://launchschool.com/blog/managing-environment-configuration-variables-in-rails
+
+
+Setting env variables on heroku:
+
+>   heroku config:set GITHUB_USERNAME=joesmith
+
+>   heroku config
+
+>   heroku config:get GITHUB_USERNAME
+
+>   heroku config:unset GITHUB_USERNAME
+
+------------------------------------------------------------------------------------------
