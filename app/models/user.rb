@@ -1,8 +1,8 @@
 class User < ActiveRecord::Base
 
-	def full_name
-		"#{firstname} #{lastname}"
-	end
+  def full_name
+    "#{firstname} #{lastname}"
+  end
 
   has_many :tasks
 

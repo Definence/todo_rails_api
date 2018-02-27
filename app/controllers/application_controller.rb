@@ -1,5 +1,5 @@
 class ApplicationController < ActionController::API
-	before_action :authenticate_user!
+  before_action :authenticate_user!
 
   def current_user
     current_user ||= User.find_by(token: request.headers['Authorization'])
@@ -14,13 +14,13 @@ class ApplicationController < ActionController::API
     end
   end
 
-	private
+  private
 
-	def authenticate_user!
-		unauthorized! unless current_user
-	end
+  def authenticate_user!
+    unauthorized! unless current_user
+  end
 
-	def unauthorized!
-		head :unauthorized
-	end
+  def unauthorized!
+    head :unauthorized
+  end
 end
